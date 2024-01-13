@@ -1,0 +1,15 @@
+services:
+  db:
+    build:
+      context: .
+      args:
+        - SDB_LICENSE
+        - SDB_PASSWORD
+    environment:
+      - SDB_LICENSE
+      - SDB_PASSWORD
+    ports:
+      - "3306:3306"
+      - "8080:8080"
+    volumes:
+      - "./keys:/etc/ssh"
