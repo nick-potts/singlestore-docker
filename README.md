@@ -62,9 +62,9 @@ mysql -h 127.0.0.1 \
 
 ## Deployment
 
-Deploy this anywhere where Docker is supported.
+This can be deployed anywhere Docker is supported.
 
-For example, this works great on [Railway](https://railway.app).
+For example, it works great on [Railway](https://railway.app).
 
 Just make sure to open port `3306`.
 
