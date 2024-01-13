@@ -7,7 +7,7 @@ ARG SDB_PASSWORD
 RUN apt -y update
 
 # Install packages needed to make Single Store work
-RUN apt install -y openssh-server apt-transport-https gnupg2 wget
+RUN apt install -y openssh-server apt-transport-https gnupg2 wget net-tools
 
 # Add Single Store sources
 RUN wget -q -O - 'https://release.memsql.com/release-aug2018.gpg' | tee /etc/apt/trusted.gpg.d/memsql.asc 1>/dev/null
@@ -27,7 +27,3 @@ RUN sdb-deploy cluster-in-a-box -y \
 # Start all nodes
 COPY start.sh /start.sh
 ENTRYPOINT nohup /start.sh & sleep infinity
-
-# Start all nodes
-#ENTRYPOINT sdb-admin
-#CMD "start-node --all --yes"
