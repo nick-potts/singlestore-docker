@@ -60,6 +60,16 @@ mysql -h 127.0.0.1 \
   --prompt="singlestore> "
 ```
 
+## Deployment
+
+Deploy this anywhere where Docker is supported.
+
+For example, this works great on [Railway](https://railway.app).
+
+Just make sure to open port `3306`.
+
+On Railway, the port can be exposed via the [TCP Port Proxy](https://docs.railway.app/guides/public-networking#tcp-proxying).
+
 ## License
 
 MIT
