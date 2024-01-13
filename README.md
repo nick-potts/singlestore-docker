@@ -2,7 +2,7 @@
 
 Example of setting up SingleStore with Docker the hard way.
 
-**NOTE**: You probably want to use the existing dev image
+**NOTE**: You probably want to use the [official image](https://hub.docker.com/r/singlestore/cluster-in-a-box)
 
 ## Setup
 
