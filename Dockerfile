@@ -2,6 +2,7 @@ FROM debian:12.4-slim
 
 ARG SDB_LICENSE
 ARG SDB_PASSWORD
+ARG SDB_VERSION
 
 # Ensure up-to-date
 RUN apt -y update
@@ -22,7 +23,7 @@ RUN sdb-deploy cluster-in-a-box -y \
   --bind-address=0.0.0.0 \
   --license $SDB_LICENSE \
   --password $SDB_PASSWORD \
-  --version 8.5
+  --version $SDB_VERSION
 
 # Start all nodes
 COPY start.sh /start.sh
