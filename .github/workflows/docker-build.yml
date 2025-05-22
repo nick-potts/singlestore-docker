@@ -9,8 +9,6 @@ on:
 jobs:
   build_and_push:
     runs-on: ubuntu-latest
-    env:
-      SDB_VERSION_VALUE: "YOUR_SDB_VERSION_HERE"
     permissions:
       contents: read
       packages: write
