@@ -19,12 +19,12 @@ RUN apt -y update
 RUN apt install -y singlestoredb-toolbox singlestore-client
 
 # Copy config file
-COPY config.yaml .
+COPY config.hcl .
 
 # Setup the node
 RUN sdb-deploy cluster-in-a-box -y \
   --bind-address=0.0.0.0 \
-  --config config.yaml \
+  --config config.hcl \
   --license $SDB_LICENSE \
   --password $SDB_PASSWORD \
   --version $SDB_VERSION
