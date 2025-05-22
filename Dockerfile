@@ -18,6 +18,9 @@ RUN apt -y update
 # Install Single Store deps
 RUN apt install -y singlestoredb-toolbox singlestore-client
 
+# Copy config file
+COPY config.yaml .
+
 # Setup the node
 RUN sdb-deploy cluster-in-a-box -y \
   --bind-address=0.0.0.0 \
