@@ -21,7 +21,7 @@ RUN apt install -y singlestoredb-toolbox singlestore-client
 # Setup the node
 RUN sdb-deploy cluster-in-a-box -y \
   --bind-address=0.0.0.0 \
-  --runtime-dir /data \
+  --config ./config.yaml \
   --license $SDB_LICENSE \
   --password $SDB_PASSWORD \
   --version $SDB_VERSION
