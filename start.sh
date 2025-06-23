@@ -5,36 +5,29 @@ echo "Starting SingleStore nodes..."
 # Initialize /data directory for leaf nodes if needed
 echo "Checking /data directory initialization..."
 
-# Check if /data is empty (no memsql_id file)
-if [ ! -f "/data/memsql_id" ]; then
-    echo "/data directory is empty, initializing..."
+# Get leaf node information
+leaf_node_info=$(memsqlctl list-nodes --json | jq -r '.nodes[] | select(.role == "Leaf")')
+if [ ! -z "$leaf_node_info" ]; then
+    leaf_node_id=$(echo "$leaf_node_info" | jq -r '.memsqlId')
     
-    # Find all nodes that might be using /data (nodes showing as "Unknown" role)
-    # First, let's find the leaf node directory by looking for port 3307
-    leaf_datadir=$(find /var/lib/memsql -type d -name "data" | grep -E "3307" | head -1)
-    
-    if [ -z "$leaf_datadir" ]; then
-        # If not found by port, look for any data directory that's not the master's
-        for datadir in $(find /var/lib/memsql -type d -name "data"); do
-            # Check if this is not the master node (port 3306)
-            if ! grep -q "3306" <<< "$datadir"; then
-                leaf_datadir="$datadir"
-                break
-            fi
-        done
-    fi
-    
-    if [ ! -z "$leaf_datadir" ] && [ -d "$leaf_datadir" ]; then
-        echo "Found leaf node data directory: $leaf_datadir"
-        echo "Copying initial data files to /data..."
-        cp -R -p "$leaf_datadir"/* /data/
-        chown -R memsql:memsql /data
-        echo "Data files copied successfully"
+    # Check if /data is empty (no memsql_id file)
+    if [ ! -f "/data/memsql_id" ]; then
+        echo "Initializing /data directory for leaf node..."
+        
+        # Find the original data directory for the leaf node
+        original_datadir=$(find /var/lib/memsql -name "data" -path "*${leaf_node_id:0:10}*" 2>/dev/null | head -1)
+        
+        if [ ! -z "$original_datadir" ] && [ -d "$original_datadir" ]; then
+            echo "Copying initial data files from $original_datadir to /data..."
+            cp -R -p "$original_datadir"/* /data/
+            chown -R memsql:memsql /data
+            echo "Data files copied successfully"
+        else
+            echo "Warning: Could not find original data directory for leaf node"
+        fi
     else
-        echo "Warning: Could not find leaf node data directory"
+        echo "/data directory already initialized"
     fi
-else
-    echo "/data directory already initialized"
 fi
 
 # Show current node status
