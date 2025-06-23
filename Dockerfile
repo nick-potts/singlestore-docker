@@ -38,4 +38,4 @@ RUN mkdir -p /data
 RUN /configure_datadir.sh
 
 # Start all nodes
-ENTRYPOINT nohup /start.sh & sleep infinity
+ENTRYPOINT ["/start.sh"]
