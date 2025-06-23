@@ -24,6 +24,18 @@ RUN sdb-deploy cluster-in-a-box -y \
   --password $SDB_PASSWORD \
   --version 8.9
 
-# Start all nodes
+RUN sdb-admin list-nodes
+
+# Copy scripts
+COPY configure_datadir.sh /configure_datadir.sh
 COPY start.sh /start.sh
+RUN chmod +x /configure_datadir.sh /start.sh
+
+# Create data directory
+RUN mkdir -p /data
+
+# Configure nodes to use /data directory
+RUN /configure_datadir.sh
+
+# Start all nodes
 ENTRYPOINT nohup /start.sh & sleep infinity
