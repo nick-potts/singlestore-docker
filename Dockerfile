@@ -15,7 +15,7 @@ RUN echo "deb [arch=amd64] https://release.memsql.com/production/debian memsql m
 RUN apt -y update
 
 # Install Single Store deps
-RUN apt install -y singlestoredb-toolbox singlestore-client
+RUN apt install -y singlestoredb-toolbox singlestore-client singlestore-studio
 
 # Setup the node
 RUN sdb-deploy cluster-in-a-box -y \

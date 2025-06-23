@@ -49,5 +49,7 @@ sdb-admin start-node --all --yes
 echo "Final node status:"
 sdb-admin list-nodes
 
+nohup singlestoredb-studio > studio.stdout 2> studio.stderr < /dev/null &
+
 # Keep the script running
 tail -f /dev/null
