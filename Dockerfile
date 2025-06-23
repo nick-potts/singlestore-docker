@@ -22,7 +22,7 @@ RUN sdb-deploy cluster-in-a-box -y \
   --bind-address=0.0.0.0 \
   --license $SDB_LICENSE \
   --password $SDB_PASSWORD \
-  --version 9.0.5
+  --version 8.9
 
 # Start all nodes
 COPY start.sh /start.sh
