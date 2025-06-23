@@ -24,7 +24,7 @@ RUN sdb-deploy cluster-in-a-box -y \
   --password $SDB_PASSWORD \
   --version 8.9
 
-RUN sdb-admin list-nodes
+RUN sdb-admin list-nodes --json
 
 # Copy scripts
 COPY configure_datadir.sh /configure_datadir.sh
