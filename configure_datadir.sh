@@ -6,15 +6,15 @@ chown -R memsql:memsql /data
 
 echo "Configuring SingleStore nodes to use /data directory..."
 
-# Stop all nodes first (required per documentation)
-echo "Stopping all nodes..."
-sdb-admin stop-node --all --yes
-
-# Get full node IDs from JSON output and update their configuration
-sdb-admin list-nodes --json | jq -r '.nodes[].memsqlId' | while read -r node_id; do
+# List all memsql nodes managed by memsqlctl
+echo "Finding local nodes..."
+memsqlctl list-nodes --json | jq -r '.nodes[].memsqlId' | while read -r node_id; do
     if [ ! -z "$node_id" ]; then
         echo "Updating data directory for node: $node_id"
-        sdb-admin update-config --key datadir --value /data --memsql-id "$node_id" --yes
+        # Stop the node
+        memsqlctl stop-node --memsql-id "$node_id" --yes
+        # Update the configuration
+        memsqlctl update-config --memsql-id "$node_id" --key datadir --value /data --yes
     fi
 done
 
